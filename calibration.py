@@ -2,20 +2,20 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt 
 
-def main(filename, force_direction):
+def main(filename, force_direction, test_number):
 	""" Generates principal axes and magnitudes """ 
 	data = np.genfromtxt(filename, delimiter=",")  # (t, fxL, fyL, fzL, mxL, myL, mzL, fxR, fyR, fzR, mxR, myR, mzR)
-	save_filename = "./processed_data" + filename[10:-4] + "_calibration.csv"
+	save_filename = "./processed_data/may_21_2021_pool/" + test_number + "_calibration.csv"
 
 	# Left force sensor
 	left_data = data[:, 1:4]
 	left_info = get_principal_axes(left_data)  # left 
-	plot_data(left_data, left_info, force_direction, save_filename[:-4] + "_Left.png")	
+	plot_data(left_data, left_info, force_direction, save_filename[:-4] + "_left.png")	
 
 	# Right force sensor
 	right_data = data[:, 7:10]
 	right_info = get_principal_axes(right_data)  # left 
-	plot_data(right_data, right_info, force_direction, save_filename[:-4] + "_Right.png")
+	plot_data(right_data, right_info, force_direction, save_filename[:-4] + "_right.png")
 
 	# Save calibration data (overwrite if exists)
 	if os.path.isfile(save_filename):
@@ -87,5 +87,6 @@ def plot_data(data, info, force_direction, filename):
 
 if __name__ == "__main__":
 	filename = "./raw_data/may_21_2021_pool/record_force_sensors_0.400000recordHz_3.csv"
+	test_number = "3"
 	force_direction = np.array([0, 0, 0])
-	main(filename, force_direction)
+	main(filename, force_direction, test_number)
